@@ -1,5 +1,8 @@
 
-# first install typeorm globally and create a project 
+# CRUD Operations using typeORM , typescript, mysql
+
+first install typeorm globally and create a project 
+
 steps:
 1. npm i -g typeorm
 2. typeorm init --name myproject --database urdatabase
