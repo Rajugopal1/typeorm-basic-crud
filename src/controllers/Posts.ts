@@ -14,18 +14,25 @@ class PostController {
   };
 
   static getPost = async (req: Request, res: Response) => {
-    const result = await AppDataSource.getRepository(Post).find();
+    const result = await AppDataSource.getRepository(Post).find({
+      relations: {
+        user: true,
+      },
+    });
     return res.json(result);
   };
 
   static getOnePost = async (req: Request, res: Response) => {
     const id = req.params.id;
-    const post = await AppDataSource.getRepository(Post).findOne(id);
+    const post = await AppDataSource.getRepository(Post).findOneBy({ id: id });
     return res.json(post);
   };
 
   static updatePost = async (req: Request, res: Response) => {
-    const post = await AppDataSource.getRepository(Post).findOne(req.params.id);
+    const post = await AppDataSource.getRepository(Post).findOneBy({
+      id: req.params.id,
+    });
+    console.log(post);
     if (post) {
       AppDataSource.getRepository(Post).merge(post, req.body);
       const result = await AppDataSource.getRepository(Post).save(post);
