@@ -21,6 +21,28 @@ class PostController {
     });
     return res.json(result);
   };
+  static pagination = async (req: Request, res: Response) => {
+    const limit = req.query.limit || 10;
+    const page = req.query.page || 1;
+    const skip = (page - 1) * limit;
+
+    const [result, count] = await AppDataSource.getRepository(
+      Post
+    ).findAndCount({
+      skip: skip,
+      take: limit,
+      relations: {
+        user: true,
+      },
+    });
+    console.log(result);
+    return res.json({
+      data: result,
+      page: page,
+      limit: limit,
+      total: count,
+    });
+  };
 
   static getOnePost = async (req: Request, res: Response) => {
     const id = req.params.id;
