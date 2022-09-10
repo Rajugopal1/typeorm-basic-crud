@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
-// import { getRepository } from "typeorm";
 import { Post } from "../entity/Post";
 class PostController {
   static postPost = async (req: Request, res: Response) => {
