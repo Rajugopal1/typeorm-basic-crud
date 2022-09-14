@@ -23,4 +23,4 @@ app.use("/test", (req, res) => res.send("server is working"));
 app.use("/post", postRoutes);
 app.use("/auth", userRoutes);
 
-app.listen(PORT, () => console.log("App is running at port 8080."));
+app.listen(PORT, () => console.log("App is running at port 3000."));
