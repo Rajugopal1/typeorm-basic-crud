@@ -18,6 +18,8 @@ const app = express();
 app.use(cors());
 app.use(BodyParser.json());
 
+app.use("/", (req, res) => res.send("server is working"));
+
 app.use("/post", postRoutes);
 app.use("/auth", userRoutes);
 
