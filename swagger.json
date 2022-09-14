@@ -9,10 +9,10 @@
     "description" : "SwaggerHub API Auto Mocking",
     "url" : "https://virtserver.swaggerhub.com/Rajugopal1/posts/1.0.0"
   }, {
-    "url" : "http://localhost:3000/"
+    "url" : "http://localhost:8080/"
   } ],
   "paths" : {
-    "/post/post/" : {
+    "/post/post" : {
       "get" : {
         "summary" : "Returns a post information",
         "responses" : {
