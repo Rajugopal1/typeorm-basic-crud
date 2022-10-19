@@ -1,0 +1,880 @@
+openapi: 3.0.1
+info:
+  title: Payrup Admin Service
+  description: List of APIs related to admin service.
+  version: "0.1"
+servers:
+  - url: https://staging.payrup.com/v1/admin
+paths:
+  /api/admin/plantab:
+    post:
+      security:
+        - bearerAuth: []
+      description: Creates new tab for given operator.This will be moved to back office api as soon as the development starts for the same.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operatorName:
+                  type: string
+                tabName:
+                  type: string
+                excludedKeywords:
+                  type: string
+                includedKeywords:
+                  type: string
+                tabOrder:
+                  type: int
+            examples:
+              "0":
+                value: |-
+                  {
+                    "operatorName": "Vodafone",
+                    "tabName":"Vodafone popular",
+                    "excludedKeywords": "unlimited,talktime",
+                    "includedKeywords": "Data",
+                    "tabOrder": 6
+                  }
+      responses:
+        "200":
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": "success",
+                      "statuscode": 200,
+                      "result": 
+                        {
+                          "message": "plan tab created successfuly"
+                        }
+                    }
+    delete:
+      security:
+        - bearerAuth: []
+      description: Removes existing mobile prepaid plan tabs logic. This will be moved to back office api as soon as the development starts for the same.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operatorName:
+                  type: string
+                tabName:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "operatorName":"Vodafone",
+                    "tabName":"smart"
+                  }
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": "success",
+                      "statuscode": 200,
+                      "result":
+                        {
+                          "message": "tab removed successfully"
+                        }
+                    }
+  /api/admin/importplans:
+    post:
+      security:
+        - bearerAuth: []
+      description: downloads mobile prepaid plans for the given operator and circle, from external services to payrup. Meant to be used by backoffice. This will be moved to back office api as soon as the development starts for the same.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operatorId:
+                  type: string
+                circleId:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "operatorId":"Airtel",
+                    "circleId":"West Bengal"
+                  }
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": "success",
+                      "statuscode": 200,
+                      "result": 
+                        {
+                          "message": "plans for the operator and circle imported successfully"
+                        }
+                    }
+  /api/admin/user:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns a user information
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "",
+                        "messageCode": "",
+                        "result": [{
+                            "id": 1,
+                            "fullName": "anandhan suruli",
+                            "dateOfBirth": null,
+                            "emailId": "anandhans8@gmail.com",
+                            "mobileNumber": "9524914940",
+                            "city": null,
+                            "state": null,
+                            "pinCode": null,
+                            "address": null,
+                            "lastLoggedIn": null,
+                            "profilePictureUrl": null,
+                            "status": true
+                        }]
+                    }
+  /api/admin/user/{userId}:
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: userId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      description: Updtae user information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                emailId:
+                  type: string
+                dateOfBirth:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                pincode:
+                  type: string
+                address:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "emailId":"anandhan@test.com",
+                    "fullName":"Anandhan Suruli",
+                    "dateOfBirth": "1993-04-09",
+                    "city": "chennai",
+                    "pincode": "600033",
+                    "address": "test"
+                  }
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "User updated successfully!",
+                      "messageCode": "",
+                      "result": {
+                        "emailId":"anandhan@test.com",
+                        "fullName":"Anandhan Suruli",
+                        "dateOfBirth": "1993-04-09",
+                        "city": "chennai",
+                        "pincode": "600033",
+                        "address": "test"
+                      }
+                    }
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: userId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      description: Delete the particular user information
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "User updated successfully!",
+                      "messageCode": "",
+                      "result": {
+                        "emailId":"anandhan@test.com",
+                        "fullName":"Anandhan Suruli",
+                        "dateOfBirth": "1993-04-09",
+                        "city": "chennai",
+                        "pincode": "600033",
+                        "address": "test"
+                      }
+                    }
+  /api/admin/login:
+    post:
+      description: Admin Login.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emailId:
+                  type: string
+                password:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "emailId": "priyankabanuchandran@gmail.com",
+                    "password":"Test@123"
+                  }
+      responses:
+        "200":
+          #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "",
+                        "messageCode": "",
+                        "result": {
+                          "userObject": {
+                              "mobileNumber": 9524914940,
+                              "lastLoggedIn": "2022-07-01T15:24:04.468Z",
+                              "createdAt": "2022-07-01T15:24:04.468Z",
+                              "updatedAt": "2022-07-01T15:24:04.468Z",
+                              "status": true,
+                              "fullName": 'Priyanka Banuchandran',
+                              "emailId": "priyankabanuchandran@gmail.com",
+                          },
+                          "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm1vYmlsZU51bWJlciI6OTUyNDkxNDk0MCwiZnVsbE5hbWUiOm51bGwsImVtYWlsSWQiOm51bGwsImlhdCI6MTY1NjY4OTA0NCwiZXhwIjoxNjU2Njg5NjQ0fQ.t3lK0i01CmE4AdcCAB6EIT2seQKJ05IBhc1jCmvk5Q0",
+                          "tokenExpiration": 600
+                        }
+                    }
+  /api/admin/onepage:
+    post:
+      security:
+        - bearerAuth: []
+      description: Create One page seo.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                metaKeywords:
+                  type: string
+                serviceProviderId:
+                  type: number
+                urlOperator:
+                  type: string
+                link:
+                  type: string
+                urlState:
+                  type: string
+                status:
+                  type: number
+                content:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "title": "make airtel online recharge",
+                    "metaKeywords": "Test@123",
+                    "serviceProviderId": "test",
+                    "urlOperator" : "airtel",
+                    "link" : "test",
+                    "urlState": "tamilnadu",
+                    "status": "1",
+                    "content": "test"
+                  }
+      responses:
+        "200":
+          #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "One Page SEO created successfully",
+                        "messageCode": "",
+                        "result": {
+                          "title": "make airtel online recharge",
+                          "metaKeywords": "Test@123",
+                          "serviceProviderId": "test",
+                          "urlOperator" : "airtel",
+                          "link" : "test",
+                          "urlState": "tamilnadu",
+                          "status": "1",
+                          "content": "test"
+                        }
+                    }
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get list of one page seo
+      responses:
+        "200":
+          #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "",
+                      "messageCode": "",
+                      "result": {
+                          "title": "make airtel online recharge",
+                          "metaKeywords": "Test@123",
+                          "serviceProviderId": "test",
+                          "urlOperator" : "airtel",
+                          "link" : "test",
+                          "urlState": "tamilnadu",
+                          "status": "1",
+                          "content": "test"
+                      }
+                    }
+
+  /api/admin/onepageseo/{onePageSeoId}:
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: onePageSeoId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The onePageSeo Id
+      description: Update onepage seo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                metaKeywords:
+                  type: string
+                serviceProviderId:
+                  type: number
+                urlOperator:
+                  type: string
+                link:
+                  type: string
+                urlState:
+                  type: string
+                status:
+                  type: number
+                content:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "title": "make airtel online recharge",
+                    "metaKeywords": "Test@123",
+                    "serviceProviderId": "test",
+                    "urlOperator" : "airtel",
+                    "link" : "test",
+                    "urlState": "tamilnadu",
+                    "status": "1",
+                    "content": "test"
+                  }
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "",
+                      "messageCode": "",
+                      "result": {
+                        "title": "make airtel online recharge",
+                        "metaKeywords": "Test@123",
+                        "serviceProviderId": "test",
+                        "urlOperator" : "airtel",
+                        "link" : "test",
+                        "urlState": "tamilnadu",
+                        "status": "1",
+                        "content": "test"
+                        "id": 1
+                      }
+                    }
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: onePageSeoId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The onePageSeo Id
+      description: delete one page seo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+            examples:
+              "0":
+                value: |-
+                  {
+                    "id": 2
+                  }
+      responses:
+        "200":
+          #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "phoneBook deleted successfully",
+                      "messageCode": "",
+                      "result": {
+                          "title": "make airtel online recharge",
+                          "metaKeywords": "Test@123",
+                          "serviceProviderId": "test",
+                          "urlOperator" : "airtel",
+                          "link" : "test",
+                          "urlState": "tamilnadu",
+                          "status": "1",
+                          "content": "test"
+                          "id": 2
+                        }
+                    }
+
+  /api/admin/service:
+    post:
+      security:
+        - bearerAuth: []
+      description: Create service.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                serviceName:
+                  type: string
+                headerLink:
+                  type: string
+                href:
+                  type: number
+                activeLogo:
+                  type: string
+                title:
+                  type: string
+                status:
+                  type: string
+                rowOrder:
+                  type: number
+                serOrder:
+                  type: number
+                paymentMode:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "serviceName": "make airtel online recharge",
+                    "headerLink": "Test@123",
+                    "href": "test",
+                    "activeLogo" : "test",
+                    "title" : "test",
+                    "status": "tamilnadu",
+                    "rowOrder": "1",
+                    "serOrder": "2",
+                    "paymentMode": "online"
+                  }
+      responses:
+        "200":
+          #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "Service created successfully",
+                        "messageCode": "",
+                        "result": {
+                          "serviceName": "make airtel online recharge",
+                          "headerLink": "Test@123",
+                          "href": "test",
+                          "activeLogo" : "test",
+                          "title" : "test",
+                          "status": "tamilnadu",
+                          "rowOrder": "1",
+                          "serOrder": "2",
+                          "paymentMode": "online"
+                        }
+                    }
+
+  /api/admin/service/{serviceId}:
+    put:
+      security:
+        - bearerAuth: []
+      description: Update service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                serviceName:
+                  type: string
+                headerLink:
+                  type: string
+                href:
+                  type: number
+                activeLogo:
+                  type: string
+                title:
+                  type: string
+                status:
+                  type: string
+                rowOrder:
+                  type: number
+                serOrder:
+                  type: number
+                paymentMode:
+                  type: string
+            examples:
+              "0":
+                value: |-
+                  {
+                    "serviceName": "make airtel online recharge",
+                    "headerLink": "Test@123",
+                    "href": "test",
+                    "activeLogo" : "test",
+                    "title" : "test",
+                    "status": "tamilnadu",
+                    "rowOrder": "1",
+                    "serOrder": "2",
+                    "paymentMode": "online",
+                    "serviceId" : "1"
+                  }
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "service updated successfully!",
+                      "messageCode": "",
+                      "result": {
+                        "serviceName": "make airtel online recharge",
+                        "headerLink": "Test@123",
+                        "href": "test",
+                        "activeLogo" : "test",
+                        "title" : "test",
+                        "status": "tamilnadu",
+                        "rowOrder": "1",
+                        "serOrder": "2",
+                        "paymentMode": "online",
+                        "serviceId" : "1"
+                      }
+                    }
+
+  /api/admin/slider/{serviceId}:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Uploads a service slider image.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: The file to upload.
+
+  /api/admin/notification:
+    get:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: pagePerItem
+          schema:
+            type: integer
+          description: The numbers of items to return
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: The page number
+      summary: Get list of notifications
+      responses:
+        "200": #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "",
+                      "messageCode": "",
+                      "result": {
+                        "total": 8,
+                        "currentPage": 1,
+                        "nextPage": 2,
+                        "prevPage": null,
+                        "lastPage": 2,
+                        "result": 
+                        [
+                          {
+                            "userId": 1,
+                            "title": "notification title ",
+                            "description": "notification description",
+                            "href": "link",
+                            "fullName": "user name"
+                          }
+                        ]
+                      }
+                    }
+    post:
+      security:
+        - bearerAuth: []
+      description: Create Notification.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                href:
+                  type: string
+                userId:
+                  type: number
+            examples:
+              "0":
+                value: |-
+                  {
+                    "title" : "notification title",
+                    "description": "notification message",
+                    "href": "notification link",
+                    "userId": 1
+                      
+                  }
+      responses:
+        "200": #description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "",
+                        "messageCode": "",
+                        "result": {
+                          "title" : "notification title",
+                          "description": "notification message",
+                          "href": "notification link",
+                          "userId": 1
+                        }
+                    }
+
+  /api/admin/notification/{notificationId}:
+    patch:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: notificationId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The notificationId
+      description: mark as read notification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                href:
+                  type: string
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                      "status": true,
+                      "message": "",
+                      "messageCode": "",
+                      "result": 
+                      {
+                          "title": "checking 1",
+                          "description": "checking desc 1",
+                          "href": "link 1"
+                      }                  
+                    }
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: notificationId # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The notificationId
+      description: Delete notification
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+              examples:
+                "0":
+                  value: |-
+                    {
+                        "status": true,
+                        "message": "",
+                        "messageCode": "notification deleted successfully!",
+                        "result":
+                          {
+                              "title" : "notification title",
+                              "description": "notification message",
+                              "href": "http://notifications.google.com/notifications/details",
+                              "userId": 1,
+                              "isRead": false
+                          }
+                    }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
