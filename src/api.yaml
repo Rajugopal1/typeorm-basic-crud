@@ -1,0 +1,148 @@
+openapi: 3.0.1
+servers: 
+    - url: http://localhost:3000/
+
+info:
+  version: "0.1"
+  title: Post API
+  description: The API for the Posts
+paths:
+  /post/post:
+    get:
+      tags:
+        - post
+      description: returns all registered posts
+      operationId: getPosts
+      parameters:
+        - in: query
+          name: skip
+          description: number of records to skip
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: limit
+          description: max number of records to return
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: All the devices
+          content:
+            application/json:
+              schema:
+                ArrayOfPosts:
+                type: array
+                  items:
+                    type: object
+                  properties:
+                    id: 
+                      type: string
+                    title: 
+                      type: string
+                    content:
+                      type: string
+                    createdAt:
+                      type: string
+                    user:
+                      type: object
+                        id: 
+                          type: string
+                        userName:
+                          type: string
+                        password:
+                          type: string
+              example:
+                id: "8e90fe4c-e110-4c90-acb9-cb3e6a95f52c"
+                title: 'working'
+                content: 'project worked'
+                createdAt: "2022-09-16T11:34:37.636Z"
+                user:
+                  id: "8e90fe4c-e110-4c90"
+                  userName: 'admin'
+                  password: 'admin'
+                    
+                    
+
+  "/post/post/{postID}":
+    get:
+      tags:
+        - post
+      operationId: getPost
+      parameters:
+        - name: postID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: response
+          content:
+            application/json:
+              schema:
+                Post:
+                type: object
+                  id:
+                    type: string
+                  title: 
+                    type: string
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                  user:
+                    type: object
+                      id: 
+                        type: string
+                      userName:
+                        type: string
+                      password:
+                        type: string
+              example:
+                id: "8e90fe4c-e110-4c90-acb9-cb3e6a95f52c"
+                title: 'working'
+                content: 'project worked'
+                createdAt: "2022-09-16T11:34:37.636Z"
+                user:
+                  id: "8e90fe4c-e110-4c90"
+                  userName: 'admin'
+                  password: 'admin'
+                  
+                      
+                    
+  path:              
+  /auth/user:
+    post:
+      tags:
+        - User
+      operationId: register user     
+      responses:
+        "200":
+          description: response
+          content:
+            application/json:
+              schema:
+                type: object
+              properties:
+                  userName:
+                    type: string
+                  password:
+                    type: string
+              example:
+                id: '63f8c526-6596-4dbd-ab98-8608a9e8fecc'
+                userName: 'testuser'
+                password: 'testuser'
+                createdAt: '2013-03-31 23:33:44'
+                posts: [
+                    {
+                      id: '63f8c526-6596-4dbd-ab98-8608a9e8fecc',
+                      title: 'Test Post createdAt',
+                      content: '  project createdAt: 2013-03-31 23:33:44',
+                      createdAt: '2013-03-31 23:33:44',
+                    }                  
+                ]
+
+      
+        
